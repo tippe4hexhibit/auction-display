@@ -6,7 +6,7 @@ import sys
 from auctiondisplay import AuctionDisplay
 
 APP_NAME = "AuctionDisplay"
-APP_VERSION = 1.0
+APP_VERSION = 1.1
 
 
 # Helper function to ensure we capture stack traces via logging

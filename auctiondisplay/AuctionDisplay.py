@@ -4,6 +4,10 @@ import logging
 
 import pandas as pd
 
+__DATA_FILE = 'Buyer-List.xlsx'
+
+data = {}
+
 # Get our logging instance
 log = logging.getLogger(__name__)
 
@@ -23,15 +27,13 @@ buyer_label.pack(expand=True)
 
 
 def read_excel_data(filename):
+    global data
     data = {}
     df = pd.read_excel(filename)
     for index, row in df.iterrows():
-        data[int(row['Buyer ID'])] = row['Buyer']  # Convert the Buyer ID to integer
+        data[int(row['Identifier'])] = row['Name']  # Convert the Buyer ID to integer
     print(f"Number of records loaded: {len(data)}")
     return data  # Return the data dictionary and the count of records loaded
-
-
-data = read_excel_data("Exported Report.xlsx")  # Initialize data with the initial read
 
 
 def update_display(value):
@@ -42,7 +44,7 @@ def update_display(value):
     elif value.lower() == 'quit':
         root.destroy()
     elif value.lower() == 'read':
-        data = read_excel_data("Exported Report.xlsx")  # Re-read the Excel file and update data
+        data = read_excel_data(__DATA_FILE)  # Re-read the Excel file and update data
     else:
         try:
             buyer_id = int(value)  # Convert user input to integer
@@ -56,7 +58,8 @@ def update_display(value):
 
 
 def run():
-
+    global data
+    data = read_excel_data(__DATA_FILE)  # Initialize data with the initial read
     print("Enter a Buyer ID ('0' to clear, 'read' to re-read Excel, 'quit' to exit):")
     while True:
         root.update()
